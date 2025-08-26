@@ -27,7 +27,7 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${AuthController.userData?.firstName ?? ''} ${AuthController.userData?.lastName ?? ''}',
+                    '${AuthController.userData?.firstName ?? ''} ${AuthController.userData?.lastName ?? ''}.',
                     style: textTheme.titleMedium,
                   ),
                   const SizedBox(height: 0),
