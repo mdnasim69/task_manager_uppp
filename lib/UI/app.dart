@@ -13,6 +13,9 @@ class TaskManagerApp extends StatelessWidget {
   const TaskManagerApp({super.key});
 
   @override
+
+ static GlobalKey<NavigatorState> nevigatorKey =GlobalKey<NavigatorState>();
+
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
@@ -40,6 +43,7 @@ class TaskManagerApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
+      navigatorKey:nevigatorKey,
       initialRoute: '/',
       onGenerateRoute: (RouteSettings settings){
         late Widget widget;
