@@ -13,9 +13,10 @@ class Cancelled extends StatefulWidget {
 }
 
 class _NewTaskState extends State<Cancelled> {
-
-  bool Loading =false;
+  bool Loading = false;
   TaskListByStatusModel? taskListByStatusModel;
+
+
   @override
   void initState() {
     _TaskList();
@@ -24,22 +25,31 @@ class _NewTaskState extends State<Cancelled> {
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
-      body: Background(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-            itemCount: taskListByStatusModel?.data?.length??0,
-            shrinkWrap: true,
-            primary: false,
-            itemBuilder: (context, index) =>  TaskItem(
-              color: Colors.redAccent,taskListModel:taskListByStatusModel!.data![index] ,
+    return Scaffold(
+      body: RefreshIndicator(
+        onRefresh:_TaskList,
+        child: Background(
+          child: Visibility(
+            visible:Loading==false,
+            replacement:Center(child:CircularProgressIndicator(),),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                itemCount: taskListByStatusModel?.data?.length ?? 0,
+                shrinkWrap: true,
+                primary: false,
+                itemBuilder: (context, index) => TaskItem(
+                  id:taskListByStatusModel!.data![index],
+                  status:'Cancelled',
+                  color: Colors.redAccent,
+                  taskListModel: taskListByStatusModel!.data![index],
+                ),
+              ),
             ),
           ),
         ),
       ),
     );
-  
   }
 
   Future<void> _TaskList() async {
@@ -53,10 +63,11 @@ class _NewTaskState extends State<Cancelled> {
         response.ResponseBody!,
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Cancelled')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Cancelled')));
     }
     Loading = false;
     setState(() {});
   }
-
 }

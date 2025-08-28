@@ -17,36 +17,39 @@ class NewTask extends StatefulWidget {
 class _NewTaskState extends State<NewTask> {
   bool Loading = false;
   TaskCountByStatusModel? taskCountByStatusModel;
-  TaskListByStatusModel ? taskListByStatusModel;
+  TaskListByStatusModel? taskListByStatusModel;
+
   @override
   void initState() {
     _TaskCount();
     _TaskList();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Background(
         child: SingleChildScrollView(
           child: Visibility(
-            visible:Loading==false,
-            replacement:Center(child:CircularProgressIndicator(),),
+            visible: Loading == false,
+            replacement: Center(child: CircularProgressIndicator()),
             child: Column(
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: SizedBox(
-                    height:100,
+                    height: 100,
                     child: ListView.builder(
-                      scrollDirection:Axis.horizontal,
-                      shrinkWrap:true,
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
                       primary: false,
                       itemCount: taskCountByStatusModel?.data?.length ?? 0,
                       itemBuilder: (context, index) {
                         return StatusCount(
                           title: taskCountByStatusModel!.data![index].sId ?? '',
-                          count: taskCountByStatusModel!.data![index].sum.toString(),
+                          count: taskCountByStatusModel!.data![index].sum
+                              .toString(),
                         );
                       },
                     ),
@@ -55,11 +58,15 @@ class _NewTaskState extends State<NewTask> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
-                    itemCount: taskListByStatusModel?.data?.length?? 0,
+                    itemCount: taskListByStatusModel?.data?.length ?? 0,
                     shrinkWrap: true,
                     primary: false,
-                    itemBuilder: (context, index) =>
-                         TaskItem(color: Colors.green,taskListModel:taskListByStatusModel!.data![index]),
+                    itemBuilder: (context, index) => TaskItem(
+                      id: taskListByStatusModel!.data![index],
+                      status:'New',
+                      color: Colors.green,
+                      taskListModel: taskListByStatusModel!.data![index],
+                    ),
                   ),
                 ),
               ],
@@ -81,7 +88,9 @@ class _NewTaskState extends State<NewTask> {
         response.ResponseBody!,
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('fail')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('fail')));
     }
     Loading = false;
     setState(() {});
@@ -98,10 +107,11 @@ class _NewTaskState extends State<NewTask> {
         response.ResponseBody!,
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('fail')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('fail')));
     }
     Loading = false;
     setState(() {});
   }
-
 }

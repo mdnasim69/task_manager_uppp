@@ -35,7 +35,7 @@ class Networkcaller {
           ResponseBody: ResponseData,
         );
       }else if (response.statusCode == 401) {
-        _logout();
+      await  _logout();
         return NetworkResponse(
           statusCode: response.statusCode,
           isSuccess: false,
@@ -79,7 +79,7 @@ class Networkcaller {
         );
       }
       else if (response.statusCode == 401) {
-        _logout();
+       await _logout();
         return NetworkResponse(
           statusCode: response.statusCode,
           isSuccess: false,

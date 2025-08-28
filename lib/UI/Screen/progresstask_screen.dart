@@ -14,9 +14,9 @@ class Progresstask extends StatefulWidget {
 }
 
 class _ProgressState extends State<Progresstask> {
-
-  bool Loading =false;
+  bool Loading = false;
   TaskListByStatusModel? taskListByStatusModel;
+
   @override
   void initState() {
     _TaskList();
@@ -25,22 +25,28 @@ class _ProgressState extends State<Progresstask> {
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
       body: Background(
-        child: Padding(
-          padding:  EdgeInsets.all(8.0),
-          child: ListView.builder(
-            itemCount: taskListByStatusModel?.data?.length?? 0,
-            shrinkWrap: true,
-            primary: false,
-            itemBuilder: (context, index) =>  TaskItem(taskListModel:taskListByStatusModel!.data![index],
-              color: Colors.yellowAccent,
+        child: Visibility(
+          visible:Loading==false,
+          replacement:Center(child:CircularProgressIndicator(),),
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: ListView.builder(
+              itemCount: taskListByStatusModel?.data?.length ?? 0,
+              shrinkWrap: true,
+              primary: false,
+              itemBuilder: (context, index) => TaskItem(
+                id:taskListByStatusModel!.data![index],
+                status:"Progress",
+                taskListModel: taskListByStatusModel!.data![index],
+                color: Colors.yellowAccent,
+              ),
             ),
           ),
         ),
       ),
     );
-
   }
 
   Future<void> _TaskList() async {
@@ -54,10 +60,11 @@ class _ProgressState extends State<Progresstask> {
         response.ResponseBody!,
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('fail')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('fail')));
     }
     Loading = false;
     setState(() {});
   }
-
 }
