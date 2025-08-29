@@ -19,7 +19,6 @@ class TaskItem extends StatefulWidget {
   final String status;
   final TaskListModel id;
 
-
   @override
   State<TaskItem> createState() => _TaskItemState();
 }
@@ -33,7 +32,7 @@ class _TaskItemState extends State<TaskItem> {
     return Card(
       elevation: 1,
       child: Padding(
-        padding:  EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -64,11 +63,14 @@ class _TaskItemState extends State<TaskItem> {
                 Container(
                   child: Row(
                     children: [
-                      ElevatedButton(
+                      OutlinedButton(
                         style: ElevatedButton.styleFrom(
+                          side: BorderSide(color: Colors.black, width: 2),
                           padding: EdgeInsets.all(0),
+                          minimumSize: Size(35, 35),
                           elevation: 3,
-                          backgroundColor: Colors.blue,
+                          backgroundColor: Colors.white,
+
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
@@ -77,15 +79,16 @@ class _TaskItemState extends State<TaskItem> {
                         child: Icon(
                           Icons.edit_calendar_sharp,
                           size: 20,
-                          color: Colors.white,
+                          color: Colors.blue,
                         ),
                       ),
-                      SizedBox(width: 5),
-                      ElevatedButton(
+                      OutlinedButton(
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.all(0),
+                          side: BorderSide(color: Colors.black, width: 2),
+                          minimumSize:Size(35, 35),
                           elevation: 5,
-                          backgroundColor: Colors.red,
+                          backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
@@ -118,7 +121,7 @@ class _TaskItemState extends State<TaskItem> {
                         },
                         child: const Icon(
                           Icons.delete_outline,
-                          color: Colors.white,
+                          color: Colors.red,
                           size: 20,
                         ),
                       ),
@@ -139,12 +142,11 @@ class _TaskItemState extends State<TaskItem> {
     NetworkResponse response = await Networkcaller.getReqest(
       URLs.DeleteTaskURL('${widget.id.sId}'),
     );
-    Loading=false;
-    setState(() {
-    });
-    if(response.isSuccess){
-      message(context,'delete complete');
-    }else{
+    Loading = false;
+    setState(() {});
+    if (response.isSuccess) {
+      message(context, 'delete complete');
+    } else {
       message(context, 'delete fail !');
     }
   }

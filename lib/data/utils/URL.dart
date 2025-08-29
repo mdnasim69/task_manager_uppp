@@ -6,4 +6,5 @@ class URLs{
   static String taskStatusCountURL ='$baseURL/taskStatusCount';
   static String NewTaskListURL(String status)=>'$baseURL/listTaskByStatus/$status';
   static String DeleteTaskURL(String id)=>'$baseURL/deleteTask/$id';
+  static String UpdateProfileURL ='$baseURL/profileUpdate';
 }

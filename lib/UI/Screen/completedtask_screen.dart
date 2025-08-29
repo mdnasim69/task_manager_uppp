@@ -28,15 +28,17 @@ class _CompletedState extends State<Completed> {
       body: Background(
         child: Visibility(visible:Loading==false,
         replacement:Center(child:CircularProgressIndicator(),),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemCount: taskListByStatusModel?.data?.length??0,
-              shrinkWrap: true,
-              primary: false,
-              itemBuilder: (context, index) =>  TaskItem(
-                id:taskListByStatusModel!.data![index],              status:'Completed',
-                color: Colors.blue,taskListModel:taskListByStatusModel!.data![index],
+          child: RefreshIndicator(onRefresh:_TaskList,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                itemCount: taskListByStatusModel?.data?.length??0,
+                shrinkWrap: true,
+                primary: true,
+                itemBuilder: (context, index) =>  TaskItem(
+                  id:taskListByStatusModel!.data![index],              status:'Completed',
+                  color: Colors.blue,taskListModel:taskListByStatusModel!.data![index],
+                ),
               ),
             ),
           ),

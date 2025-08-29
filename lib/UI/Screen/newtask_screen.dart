@@ -29,47 +29,49 @@ class _NewTaskState extends State<NewTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Background(
-        child: SingleChildScrollView(
+      body: RefreshIndicator(onRefresh: _TaskList,
+        child: Background(
           child: Visibility(
             visible: Loading == false,
             replacement: Center(child: CircularProgressIndicator()),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    height: 100,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      height: 92,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        primary: true,
+                        itemCount: taskCountByStatusModel?.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return StatusCount(
+                            title: taskCountByStatusModel!.data![index].sId ?? '',
+                            count: taskCountByStatusModel!.data![index].sum
+                                .toString(),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
+                      itemCount: taskListByStatusModel?.data?.length ?? 0,
                       shrinkWrap: true,
-                      primary: false,
-                      itemCount: taskCountByStatusModel?.data?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return StatusCount(
-                          title: taskCountByStatusModel!.data![index].sId ?? '',
-                          count: taskCountByStatusModel!.data![index].sum
-                              .toString(),
-                        );
-                      },
+                      primary: true,
+                      itemBuilder: (context, index) => TaskItem(
+                        id: taskListByStatusModel!.data![index],
+                        status:'New',
+                        color: Colors.green,
+                        taskListModel: taskListByStatusModel!.data![index],
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView.builder(
-                    itemCount: taskListByStatusModel?.data?.length ?? 0,
-                    shrinkWrap: true,
-                    primary: false,
-                    itemBuilder: (context, index) => TaskItem(
-                      id: taskListByStatusModel!.data![index],
-                      status:'New',
-                      color: Colors.green,
-                      taskListModel: taskListByStatusModel!.data![index],
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -30,17 +30,19 @@ class _ProgressState extends State<Progresstask> {
         child: Visibility(
           visible:Loading==false,
           replacement:Center(child:CircularProgressIndicator(),),
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemCount: taskListByStatusModel?.data?.length ?? 0,
-              shrinkWrap: true,
-              primary: false,
-              itemBuilder: (context, index) => TaskItem(
-                id:taskListByStatusModel!.data![index],
-                status:"Progress",
-                taskListModel: taskListByStatusModel!.data![index],
-                color: Colors.yellowAccent,
+          child: RefreshIndicator(onRefresh: _TaskList,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: ListView.builder(
+                itemCount: taskListByStatusModel?.data?.length ?? 0,
+                shrinkWrap: false,
+                primary: true,
+                itemBuilder: (context, index) => TaskItem(
+                  id:taskListByStatusModel!.data![index],
+                  status:"Progress",
+                  taskListModel: taskListByStatusModel!.data![index],
+                  color: Colors.yellowAccent,
+                ),
               ),
             ),
           ),

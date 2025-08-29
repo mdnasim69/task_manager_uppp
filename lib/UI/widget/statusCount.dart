@@ -11,10 +11,10 @@ class StatusCount extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     return Card(
-      elevation: 5,
+      elevation: 3,
       child: SizedBox(
-        height: 100,
-        width: 110,
+        height: 80,
+        width: 80,
         child: Column(
           children: [
             const SizedBox(

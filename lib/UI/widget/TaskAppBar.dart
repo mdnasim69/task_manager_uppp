@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:task_manager/UI/Screen/Login_Screen.dart';
 import 'package:task_manager/UI/Screen/UpdateProfileScreen.dart';
@@ -20,7 +22,12 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
         },
         child: Row(
           children: [
-            const CircleAvatar(),
+            CircleAvatar(radius:16,
+              backgroundImage: MemoryImage(
+                base64Decode(AuthController.userData?.photo ?? ''),
+              ),
+              onBackgroundImageError: (_, __) => Icon(Icons.person),
+            ),
             const SizedBox(width: 8),
             Expanded(
               child: Column(
@@ -32,7 +39,7 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   const SizedBox(height: 0),
                   Text(
-                    AuthController.userData?.email?? '',
+                    AuthController.userData?.email ?? '',
                     style: textTheme.titleMedium?.copyWith(
                       color: const Color.fromARGB(255, 114, 255, 59),
                     ),
@@ -42,11 +49,33 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             IconButton(
               onPressed: () async {
-                await AuthController.clearUserData();
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  LoginScreen.name,
-                  (value) => false,
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('Log out'),
+                      content: Text('Do you want to Log out '),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('No'),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            await AuthController.clearUserData();
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              LoginScreen.name,
+                              (value) => false,
+                            );
+                          },
+                          child: Text('Yes'),
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
               icon: const Icon(Icons.output, color: Colors.black, size: 36),

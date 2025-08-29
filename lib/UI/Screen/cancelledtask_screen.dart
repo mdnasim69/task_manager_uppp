@@ -16,7 +16,6 @@ class _NewTaskState extends State<Cancelled> {
   bool Loading = false;
   TaskListByStatusModel? taskListByStatusModel;
 
-
   @override
   void initState() {
     _TaskList();
@@ -27,20 +26,20 @@ class _NewTaskState extends State<Cancelled> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
-        onRefresh:_TaskList,
+        onRefresh: _TaskList,
         child: Background(
           child: Visibility(
-            visible:Loading==false,
-            replacement:Center(child:CircularProgressIndicator(),),
+            visible: Loading == false,
+            replacement: Center(child: CircularProgressIndicator()),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.builder(
                 itemCount: taskListByStatusModel?.data?.length ?? 0,
                 shrinkWrap: true,
-                primary: false,
+                primary: true,
                 itemBuilder: (context, index) => TaskItem(
-                  id:taskListByStatusModel!.data![index],
-                  status:'Cancelled',
+                  id: taskListByStatusModel!.data![index],
+                  status: 'Cancelled',
                   color: Colors.redAccent,
                   taskListModel: taskListByStatusModel!.data![index],
                 ),

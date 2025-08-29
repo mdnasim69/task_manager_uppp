@@ -185,7 +185,7 @@ class _LoginScreenState extends State<SignUpScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Alrady have account !',
+                            'Already have account !',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,

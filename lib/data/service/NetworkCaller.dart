@@ -25,7 +25,7 @@ class Networkcaller {
       Uri uri = Uri.parse(url);
       Response response = await get(
         uri,
-        headers: {'token': AuthController.getToken!},
+        headers: {'token': AuthController.getToken??''},
       );
       final ResponseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
@@ -66,7 +66,7 @@ class Networkcaller {
         uri,
         headers: {
           'Content-Type': 'application/json',
-          'token': AuthController.getToken!,
+          'token': AuthController.getToken??'',
         },
         body: jsonEncode(postBody),
       );
