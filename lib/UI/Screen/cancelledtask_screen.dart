@@ -38,7 +38,7 @@ class _NewTaskState extends State<Cancelled> {
                 shrinkWrap: true,
                 primary: true,
                 itemBuilder: (context, index) => TaskItem(
-                  id: taskListByStatusModel!.data![index],
+                  id: taskListByStatusModel!.data![index].sId.toString(),
                   status: 'Cancelled',
                   color: Colors.redAccent,
                   taskListModel: taskListByStatusModel!.data![index],

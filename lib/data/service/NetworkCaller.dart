@@ -21,11 +21,12 @@ class NetworkResponse {
 
 class Networkcaller {
   static Future<NetworkResponse> getReqest(url) async {
+    print(AuthController.getToken??'unknown');
     try {
       Uri uri = Uri.parse(url);
       Response response = await get(
         uri,
-        headers: {'token': AuthController.getToken??''},
+        headers: {'token': AuthController.getToken ??''},
       );
       final ResponseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
@@ -34,14 +35,16 @@ class Networkcaller {
           isSuccess: true,
           ResponseBody: ResponseData,
         );
-      }else if (response.statusCode == 401) {
+      }
+      else if (response.statusCode == 401) {
       await  _logout();
         return NetworkResponse(
           statusCode: response.statusCode,
           isSuccess: false,
           errorMassage: 'request fail',
         );
-      } else {
+      }
+      else {
         return NetworkResponse(
           statusCode: response.statusCode,
           isSuccess: false,

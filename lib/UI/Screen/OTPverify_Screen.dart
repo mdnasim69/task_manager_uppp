@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/UI/Screen/Login_Screen.dart';
 import 'package:task_manager/UI/Screen/SetPassword_Screen.dart';
 import 'package:task_manager/UI/widget/background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
+import '../../data/service/NetworkCaller.dart';
+import '../../data/utils/URL.dart';
+import '../widget/massage.dart';
 
 class OTPverifyScreen extends StatefulWidget {
   const OTPverifyScreen({super.key});
@@ -14,7 +19,7 @@ class OTPverifyScreen extends StatefulWidget {
 class _LoginScreenState extends State<OTPverifyScreen> {
   final TextEditingController _OTPController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
+bool Loading=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +65,7 @@ class _LoginScreenState extends State<OTPverifyScreen> {
                       shape: PinCodeFieldShape.box,
                       borderRadius: BorderRadius.circular(5),
                       fieldHeight: 50,
-                      fieldWidth: 40,
+                      fieldWidth: 45,
                       activeFillColor: Colors.white,
                       inactiveFillColor: Colors.white,
                       selectedFillColor: Colors.white,
@@ -70,7 +75,7 @@ class _LoginScreenState extends State<OTPverifyScreen> {
                       errorBorderColor: Colors.red,
                     ),
                     animationDuration: const Duration(milliseconds: 300),
-                    backgroundColor: Colors.blue.shade50,
+                    backgroundColor:Colors.transparent,
                     enableActiveFill: true,
                     controller: _OTPController,
                     onCompleted: (v) {
@@ -83,20 +88,26 @@ class _LoginScreenState extends State<OTPverifyScreen> {
                   ),
                   SizedBox(
                     height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, SetPasswordScreen.name);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size.fromWidth(double.maxFinite),
-                        backgroundColor: Colors.blueAccent,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                    child: Visibility(
+                      visible:Loading==false,
+                      replacement:Center(child:CircularProgressIndicator(),),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if(_formkey.currentState!.validate()){
+                            _OtpV();
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          fixedSize: const Size.fromWidth(double.maxFinite),
+                          backgroundColor: Colors.blueAccent,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        'Next',
+                        child: const Text(
+                          'Next',
+                        ),
                       ),
                     ),
                   ),
@@ -111,6 +122,21 @@ class _LoginScreenState extends State<OTPverifyScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _OtpV() async {
+    Loading = true;
+    setState(() {});
+    NetworkResponse response = await Networkcaller.getReqest(
+      URLs.OTPverifyURL(_OTPController.text.trim()),
+    );
+    Loading = false;
+    setState(() {});
+    if (response.isSuccess) {
+      Navigator.pushNamed(context, SetPasswordScreen.name);
+    } else {
+      message(context, '${response.errorMassage} ,something went wrong');
+    }
   }
 
   @override

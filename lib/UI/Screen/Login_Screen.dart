@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
           context, HomeScreen.name, (predicate) => false);
     } else {
       print(response.ResponseBody);
-      message( context,"${ response.errorMassage} ${response.ResponseBody} 12345");
+      message( context,"${ response.errorMassage}");
     }
   }
 

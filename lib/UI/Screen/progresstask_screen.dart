@@ -38,7 +38,7 @@ class _ProgressState extends State<Progresstask> {
                 shrinkWrap: false,
                 primary: true,
                 itemBuilder: (context, index) => TaskItem(
-                  id:taskListByStatusModel!.data![index],
+                  id:taskListByStatusModel!.data![index].sId.toString(),
                   status:"Progress",
                   taskListModel: taskListByStatusModel!.data![index],
                   color: Colors.yellowAccent,

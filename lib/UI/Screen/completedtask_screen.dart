@@ -36,7 +36,7 @@ class _CompletedState extends State<Completed> {
                 shrinkWrap: true,
                 primary: true,
                 itemBuilder: (context, index) =>  TaskItem(
-                  id:taskListByStatusModel!.data![index],              status:'Completed',
+                  id:taskListByStatusModel!.data![index].sId.toString(),              status:'Completed',
                   color: Colors.blue,taskListModel:taskListByStatusModel!.data![index],
                 ),
               ),

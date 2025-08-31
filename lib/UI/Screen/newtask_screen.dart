@@ -63,7 +63,7 @@ class _NewTaskState extends State<NewTask> {
                       shrinkWrap: true,
                       primary: true,
                       itemBuilder: (context, index) => TaskItem(
-                        id: taskListByStatusModel!.data![index],
+                        id: taskListByStatusModel!.data![index].sId.toString(),
                         status:'New',
                         color: Colors.green,
                         taskListModel: taskListByStatusModel!.data![index],
@@ -92,7 +92,7 @@ class _NewTaskState extends State<NewTask> {
     } else {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('fail')));
+      ).showSnackBar(SnackBar(content: Text('fail 2')));
     }
     Loading = false;
     setState(() {});
@@ -111,7 +111,7 @@ class _NewTaskState extends State<NewTask> {
     } else {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('fail')));
+      ).showSnackBar(SnackBar(content: Text('fail 1')));
     }
     Loading = false;
     setState(() {});

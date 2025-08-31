@@ -17,7 +17,7 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: GestureDetector(
         onTap: () {
           UpdateProfileScreen
-              ? (Navigator.pushNamed(context, Updateprofilescreen.name))
+              ? (Navigator.pushNamed(context, Updateprofilescreen.name,))
               : ();
         },
         child: Row(

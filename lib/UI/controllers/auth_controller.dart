@@ -1,18 +1,18 @@
 
 import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/data/model/user_model.dart';
 
 class AuthController{
-
   static String? getToken;
   static UserModel? userData;
-
   static Future<void> saveuserData(String acessToken,UserModel usermodel)async{
     SharedPreferences preferences =await SharedPreferences.getInstance();
    await preferences.setString('token',acessToken);
    await preferences.setString('userData', jsonEncode(usermodel.toJSON()));
+   await setUserData();
+  // userData = usermodel ;
+   // getToken=acessToken;
   }
 
   static Future<bool> IsLogin()async{
@@ -27,8 +27,8 @@ class AuthController{
 
   static Future<void> setUserData()async{
     SharedPreferences preferences =await SharedPreferences.getInstance();
-    String? token = await preferences.getString('token');
-    String? UserData = await preferences.getString('userData');
+    String? token = preferences.getString('token');
+    String? UserData = preferences.getString('userData');
     getToken =token;
     userData =UserModel.fromJson(jsonDecode(UserData!));
   }
