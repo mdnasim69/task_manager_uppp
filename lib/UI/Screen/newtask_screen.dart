@@ -61,7 +61,7 @@ class _NewTaskState extends State<NewTask> {
                     child: ListView.builder(
                       itemCount: taskListByStatusModel?.data?.length ?? 0,
                       shrinkWrap: true,
-                      primary: true,
+                      primary: false,
                       itemBuilder: (context, index) => TaskItem(
                         id: taskListByStatusModel!.data![index].sId.toString(),
                         status:'New',

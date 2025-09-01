@@ -33,7 +33,7 @@ class _TaskItemState extends State<TaskItem> {
       visible: Loading == false,
       replacement: Center(child: CircularProgressIndicator()),
       child: Card(
-        elevation: 1,
+        elevation: 0.0,
         child: Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
