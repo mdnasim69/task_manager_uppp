@@ -55,7 +55,7 @@ class _NewTaskState extends State<Cancelled> {
     Loading = true;
     setState(() {});
     NetworkResponse response = await Networkcaller.getReqest(
-      URLs.NewTaskListURL('New'),
+      URLs.NewTaskListURL('Cancelled'),
     );
     if (response.isSuccess) {
       taskListByStatusModel = TaskListByStatusModel.fromJson(

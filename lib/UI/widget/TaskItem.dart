@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/data/model/TaskListModel.dart';
-
 import '../../data/service/NetworkCaller.dart';
 import '../../data/utils/URL.dart';
 import 'massage.dart';
@@ -154,8 +153,7 @@ class _TaskItemState extends State<TaskItem> {
           height: 320,
           padding: EdgeInsets.all(16),
           child: StatefulBuilder(builder:(context, setState) =>
-
-             Column(
+              Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment:CrossAxisAlignment.center,
               children: [
