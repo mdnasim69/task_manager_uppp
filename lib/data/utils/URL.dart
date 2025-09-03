@@ -1,6 +1,3 @@
-import 'package:task_manager/UI/Screen/EmailVerify_Screen.dart';
-import 'package:task_manager/UI/Screen/OTPverify_Screen.dart';
-
 class URLs {
   static String? Email;
   static String? OTP;
@@ -20,9 +17,11 @@ class URLs {
     Email = email;
     return '$baseURL/RecoverVerifyEmail/$email';
   }
+
   static OTPverifyURL(String Otp) {
     OTP = Otp;
     return '$baseURL/RecoverVerifyOTP/$Email/$Otp';
   }
+
   static String SetPassURL = '$baseURL/RecoverResetPass';
 }

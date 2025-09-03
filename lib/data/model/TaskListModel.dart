@@ -5,7 +5,13 @@ class TaskListModel {
   String? status;
   String? createdDate;
 
-  TaskListModel({this.sId, this.title, this.description, this.status, this.createdDate});
+  TaskListModel({
+    this.sId,
+    this.title,
+    this.description,
+    this.status,
+    this.createdDate,
+  });
 
   TaskListModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -16,7 +22,7 @@ class TaskListModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
     data['title'] = title;
     data['description'] = description;
