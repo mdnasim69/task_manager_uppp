@@ -152,10 +152,10 @@ class _TaskItemState extends State<TaskItem> {
         return Container(
           height: 320,
           padding: EdgeInsets.all(16),
-          child: StatefulBuilder(builder:(context, setState) =>
-              Column(
+          child: StatefulBuilder(
+            builder: (context, setState) => Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment:CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 RadioListTile(
                   value: 'New',
@@ -168,7 +168,10 @@ class _TaskItemState extends State<TaskItem> {
                 ),
                 RadioListTile(
                   value: 'Progress',
-                  title: Text('Progress', style: TextStyle(color: Colors.black)),
+                  title: Text(
+                    'Progress',
+                    style: TextStyle(color: Colors.black),
+                  ),
                   groupValue: Status,
                   onChanged: (value) {
                     Status = value!;
@@ -177,7 +180,10 @@ class _TaskItemState extends State<TaskItem> {
                 ),
                 RadioListTile(
                   value: 'Completed',
-                  title: Text('Completed', style: TextStyle(color: Colors.black)),
+                  title: Text(
+                    'Completed',
+                    style: TextStyle(color: Colors.black),
+                  ),
                   groupValue: Status,
                   onChanged: (value) {
                     Status = value!;
@@ -186,7 +192,10 @@ class _TaskItemState extends State<TaskItem> {
                 ),
                 RadioListTile(
                   value: 'Cancelled',
-                  title: Text('Cancelled', style: TextStyle(color: Colors.black)),
+                  title: Text(
+                    'Cancelled',
+                    style: TextStyle(color: Colors.black),
+                  ),
                   groupValue: Status,
                   onChanged: (value) {
                     Status = value!;
@@ -194,11 +203,15 @@ class _TaskItemState extends State<TaskItem> {
                   },
                 ),
                 ElevatedButton(
-                  onPressed: () {_ChangeStatus();},
+                  onPressed: () {
+                    _ChangeStatus();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.amber,
+                  ),
                   child: Text('Change'),
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
                 ),
-                SizedBox(height:8,)
+                SizedBox(height: 8),
               ],
             ),
           ),
@@ -211,7 +224,7 @@ class _TaskItemState extends State<TaskItem> {
     Loading = true;
     setState(() {});
     NetworkResponse response = await Networkcaller.getReqest(
-      URLs.DeleteTaskURL('${widget.id}'),
+      URLs.DeleteTaskURL(widget.id),
     );
     Loading = false;
     setState(() {});
@@ -226,9 +239,9 @@ class _TaskItemState extends State<TaskItem> {
     Loading = true;
     setState(() {});
     NetworkResponse response = await Networkcaller.getReqest(
-      URLs.ChangeStatusTaskURL(widget.id,Status),
+      URLs.ChangeStatusTaskURL(widget.id, Status),
     );
-    print(widget.id,);
+    print(widget.id);
     print(Status);
     Loading = false;
     setState(() {});

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class StatusCount extends StatelessWidget {
-  const StatusCount(
-      {super.key, required, required this.title, required this.count});
+  const StatusCount({
+    super.key,
+    required,
+    required this.title,
+    required this.count,
+  });
 
   final String title;
   final String count;
@@ -13,17 +17,16 @@ class StatusCount extends StatelessWidget {
     return Card(
       elevation: 3,
       child: SizedBox(
-        height: 80,
-        width: 80,
+        height: 90,
+        width: 90,
         child: Column(
           children: [
-            const SizedBox(
-              height: 8,
-            ),
+            const SizedBox(height: 0),
             Text(
               count,
-              style: textTheme.displayMedium
-                  ?.copyWith(fontWeight: FontWeight.w600),
+              style: textTheme.displayMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
             Text(title, style: textTheme.bodyLarge),
           ],

@@ -29,7 +29,8 @@ class _NewTaskState extends State<NewTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: RefreshIndicator(onRefresh: _TaskList,
+      body: RefreshIndicator(
+        onRefresh: _TaskList,
         child: Background(
           child: Visibility(
             visible: Loading == false,
@@ -40,7 +41,7 @@ class _NewTaskState extends State<NewTask> {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: SizedBox(
-                      height: 92,
+                      height: 100,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
@@ -48,7 +49,8 @@ class _NewTaskState extends State<NewTask> {
                         itemCount: taskCountByStatusModel?.data?.length ?? 0,
                         itemBuilder: (context, index) {
                           return StatusCount(
-                            title: taskCountByStatusModel!.data![index].sId ?? '',
+                            title:
+                                taskCountByStatusModel!.data![index].sId ?? '',
                             count: taskCountByStatusModel!.data![index].sum
                                 .toString(),
                           );
@@ -64,7 +66,7 @@ class _NewTaskState extends State<NewTask> {
                       primary: false,
                       itemBuilder: (context, index) => TaskItem(
                         id: taskListByStatusModel!.data![index].sId.toString(),
-                        status:'New',
+                        status: 'New',
                         color: Colors.green,
                         taskListModel: taskListByStatusModel!.data![index],
                       ),

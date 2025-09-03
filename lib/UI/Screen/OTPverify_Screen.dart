@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/UI/Screen/Login_Screen.dart';
 import 'package:task_manager/UI/Screen/SetPassword_Screen.dart';
 import 'package:task_manager/UI/widget/background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -19,7 +18,7 @@ class OTPverifyScreen extends StatefulWidget {
 class _LoginScreenState extends State<OTPverifyScreen> {
   final TextEditingController _OTPController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-bool Loading=false;
+  bool Loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +33,7 @@ bool Loading=false;
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 80,
-                  ),
+                  const SizedBox(height: 80),
                   Container(
                     alignment: Alignment.center,
                     child: Text(
@@ -48,15 +45,10 @@ bool Loading=false;
                     alignment: Alignment.center,
                     child: const Text(
                       'A 6 digit has been be sent in your email',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 18,
-                      ),
+                      style: TextStyle(color: Colors.grey, fontSize: 18),
                     ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+                  const SizedBox(height: 16),
                   PinCodeTextField(
                     length: 6,
                     obscureText: false,
@@ -75,7 +67,7 @@ bool Loading=false;
                       errorBorderColor: Colors.red,
                     ),
                     animationDuration: const Duration(milliseconds: 300),
-                    backgroundColor:Colors.transparent,
+                    backgroundColor: Colors.transparent,
                     enableActiveFill: true,
                     controller: _OTPController,
                     onCompleted: (v) {
@@ -83,17 +75,15 @@ bool Loading=false;
                     },
                     appContext: context,
                   ),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                  const SizedBox(height: 24),
                   SizedBox(
                     height: 50,
                     child: Visibility(
-                      visible:Loading==false,
-                      replacement:Center(child:CircularProgressIndicator(),),
+                      visible: Loading == false,
+                      replacement: Center(child: CircularProgressIndicator()),
                       child: ElevatedButton(
                         onPressed: () {
-                          if(_formkey.currentState!.validate()){
+                          if (_formkey.currentState!.validate()) {
                             _OtpV();
                           }
                         },
@@ -105,16 +95,11 @@ bool Loading=false;
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                        child: const Text(
-                          'Next',
-                        ),
+                        child: const Text('Next'),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 48,
-                  ),
-                
+                  const SizedBox(height: 48),
                 ],
               ),
             ),

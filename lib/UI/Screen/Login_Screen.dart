@@ -39,9 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 80,
-                    ),
+                    const SizedBox(height: 80),
                     Container(
                       alignment: Alignment.center,
                       child: Text(
@@ -49,9 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    const SizedBox(height: 16),
                     TextFormField(
                       validator: (String? value) {
                         if (value?.trim().isEmpty ?? true) {
@@ -61,13 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        hintText: 'Email',
-                      ),
+                      decoration: const InputDecoration(hintText: 'Email'),
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    const SizedBox(height: 16),
                     TextFormField(
                       validator: (String? value) {
                         if (value?.trim().isEmpty ?? true) {
@@ -78,18 +70,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: _passwordController,
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Password',
-                      ),
+                      decoration: const InputDecoration(hintText: 'Password'),
                     ),
-                    const SizedBox(
-                      height: 24,
-                    ),
+                    const SizedBox(height: 24),
                     SizedBox(
                       height: 50,
                       child: Visibility(
-                        visible:Loading==false,
-                        replacement:const Center(child: CircularProgressIndicator(),),
+                        visible: Loading == false,
+                        replacement: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formkey.currentState!.validate()) {
@@ -104,15 +94,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                           ),
-                          child: const Text(
-                            'Login',
-                          ),
+                          child: const Text('Login'),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 48,
-                    ),
+                    const SizedBox(height: 48),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,20 +106,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         InkWell(
                           onTap: () {
                             //
-                            Navigator.pushNamed(context, EmailverifyScreen.name);
+                            Navigator.pushNamed(
+                              context,
+                              EmailverifyScreen.name,
+                            );
                             //
                           },
                           child: Text(
-                            'Forgot password ' ,
+                            'Forgot password ',
                             style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 18,
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 12,
-                        ),
+                        const SizedBox(height: 12),
                         InkWell(
                           onTap: () {
                             //
@@ -150,21 +137,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontSize: 16,
                                 ),
                               ),
-                              SizedBox(
-                                width: 12,
-                              ),
+                              SizedBox(width: 12),
                               Text(
                                 'Sign Up',
                                 style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 16,
                                 ),
-                              )
+                              ),
                             ],
                           ),
-                        )
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -180,22 +165,27 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {});
     Map<String, dynamic> PostBody = {
       "email": _emailController.text.trim(),
-      "password": _passwordController.text
+      "password": _passwordController.text,
     };
-    NetworkResponse response =
-        await Networkcaller.postReqest(URLs.loginURL, PostBody);
+    NetworkResponse response = await Networkcaller.postReqest(
+      URLs.loginURL,
+      PostBody,
+    );
     Loading = false;
     setState(() {});
     if (response.isSuccess) {
-      String token= response.ResponseBody!['token'];
-      UserModel userData= UserModel.fromJson(response.ResponseBody!['data']);
-     await AuthController.saveuserData(token, userData);
+      String token = response.ResponseBody!['token'];
+      UserModel userData = UserModel.fromJson(response.ResponseBody!['data']);
+      await AuthController.saveuserData(token, userData);
       message(context, 'Login Success');
       Navigator.pushNamedAndRemoveUntil(
-          context, HomeScreen.name, (predicate) => false);
+        context,
+        HomeScreen.name,
+        (predicate) => false,
+      );
     } else {
       print(response.ResponseBody);
-      message( context,"${ response.errorMassage}");
+      message(context, response.errorMassage);
     }
   }
 
