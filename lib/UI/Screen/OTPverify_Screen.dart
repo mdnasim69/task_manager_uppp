@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/UI/Screen/SetPassword_Screen.dart';
 import 'package:task_manager/UI/widget/background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -118,7 +119,8 @@ class _LoginScreenState extends State<OTPverifyScreen> {
     Loading = false;
     setState(() {});
     if (response.isSuccess) {
-      Navigator.pushNamed(context, SetPasswordScreen.name);
+    //  Navigator.pushNamed(context, SetPasswordScreen.name);
+      Get.toNamed(SetPasswordScreen.name);
     } else {
       message(context, '${response.errorMassage} ,something went wrong');
     }

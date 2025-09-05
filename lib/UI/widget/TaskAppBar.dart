@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:task_manager/UI/Screen/Login_Screen.dart';
 import 'package:task_manager/UI/Screen/UpdateProfileScreen.dart';
 import 'package:task_manager/UI/controllers/auth_controller.dart';
+import 'package:get/get.dart';
 
 class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TaskAppBar({super.key, required this.UpdateProfileScreen});
@@ -17,12 +19,16 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: GestureDetector(
         onTap: () {
           UpdateProfileScreen
-              ? (Navigator.pushNamed(context, Updateprofilescreen.name,))
+              ? (
+          //Navigator.pushNamed(context, Updateprofilescreen.name)
+              Get.toNamed(Updateprofilescreen.name)
+          )
               : ();
         },
         child: Row(
           children: [
-            CircleAvatar(radius:16,
+            CircleAvatar(
+              radius: 16,
               backgroundImage: MemoryImage(
                 base64Decode(AuthController.userData?.photo ?? ''),
               ),
@@ -57,19 +63,21 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
                       content: Text('Do you want to Log out '),
                       actions: [
                         TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
+                          onPressed: (){
+                          //  Navigator.of(context).pop();
+                            Get.back();
                           },
                           child: Text('No'),
                         ),
                         TextButton(
                           onPressed: () async {
                             await AuthController.clearUserData();
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              LoginScreen.name,
-                              (value) => false,
-                            );
+                            // Navigator.pushNamedAndRemoveUntil(
+                            //   context,
+                            //   LoginScreen.name,
+                            //   (value) => false,
+                            // );
+                            Get.offAllNamed(LoginScreen.name);
                           },
                           child: Text('Yes'),
                         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/UI/Screen/Home.dart';
 import 'package:task_manager/data/service/NetworkCaller.dart';
 import 'package:task_manager/data/utils/URL.dart';
@@ -125,7 +126,8 @@ class _LoginScreenState extends State<AddnewtaskScree> {
     if(response.isSuccess){
       _clearField();
       message(context, 'Login Success');
-      Navigator.pushNamed(context, HomeScreen.name);
+     // Navigator.pushNamed(context, HomeScreen.name);
+      Get.toNamed(HomeScreen.name);
     }else{
       message(context, 'Login failed! try again');
     }

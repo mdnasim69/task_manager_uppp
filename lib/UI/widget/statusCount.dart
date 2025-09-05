@@ -14,7 +14,7 @@ class StatusCount extends StatelessWidget {
       elevation: 3,
       child: SizedBox(
         height: 80,
-        width: 80,
+        width: 90,
         child: Column(
           children: [
             const SizedBox(

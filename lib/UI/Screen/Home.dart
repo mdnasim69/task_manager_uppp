@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/UI/Screen/AddNewTask_scree.dart';
 import 'package:task_manager/UI/Screen/cancelledtask_screen.dart';
 import 'package:task_manager/UI/Screen/completedtask_screen.dart';
@@ -69,7 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
         shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor:Colors.yellowAccent,
         onPressed: () {
-          Navigator.pushNamed(context, AddnewtaskScree.name);
+          //Navigator.pushNamed(context, AddnewtaskScree.name);
+        Get.toNamed(AddnewtaskScree.name);
         },
         child: const Icon(Icons.add),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/UI/Screen/OTPverify_Screen.dart';
 import 'package:task_manager/UI/Screen/SignUp_Screen.dart';
 import 'package:task_manager/UI/widget/background.dart';
@@ -90,8 +91,9 @@ class _LoginScreenState extends State<EmailverifyScreen> {
                   InkWell(
                     onTap: () {
                       //
-                      Navigator.pushNamed(context, SignUpScreen.name);
+                     // Navigator.pushNamed(context, SignUpScreen.name);
                       //
+                      Get.toNamed(SignUpScreen.name);
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +128,8 @@ class _LoginScreenState extends State<EmailverifyScreen> {
     Loading = false;
     setState(() {});
     if (response.isSuccess) {
-      Navigator.pushNamed(context, OTPverifyScreen.name);
+     // Navigator.pushNamed(context, OTPverifyScreen.name);
+      Get.toNamed(OTPverifyScreen.name);
     } else {
       message(context, '${response.errorMassage} ,fail try again');
     }

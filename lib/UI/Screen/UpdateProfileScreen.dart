@@ -8,7 +8,6 @@ import 'package:task_manager/UI/widget/background.dart';
 import 'package:task_manager/UI/widget/massage.dart';
 import 'package:task_manager/data/service/NetworkCaller.dart';
 import 'package:task_manager/data/utils/URL.dart';
-
 class Updateprofilescreen extends StatefulWidget {
   const Updateprofilescreen({super.key});
 

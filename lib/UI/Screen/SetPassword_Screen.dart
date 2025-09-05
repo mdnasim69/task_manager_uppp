@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/UI/Screen/Login_Screen.dart';
 import 'package:task_manager/UI/widget/background.dart';
 
@@ -121,11 +122,12 @@ class _LoginScreenState extends State<SetPasswordScreen> {
     );
 
     if (response.isSuccess && response.ResponseBody!['status']=='success') {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        LoginScreen.name,
-        (predicate) => false,
-      );
+      // Navigator.pushNamedAndRemoveUntil(
+      //   context,
+      //   LoginScreen.name,
+      //   (predicate) => false,
+      // );
+      Get.offAllNamed(LoginScreen.name);
       message(context, 'Password Changed');
     } else {
       message(context, '${response.errorMassage} ,something went wrong ${URLs.Email.toString()} ${URLs.OTP.toString()}');

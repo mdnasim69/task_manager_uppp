@@ -8,6 +8,7 @@ import 'package:task_manager/UI/widget/massage.dart';
 import 'package:task_manager/data/model/user_model.dart';
 import 'package:task_manager/data/service/NetworkCaller.dart';
 import 'package:task_manager/data/utils/URL.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -106,11 +107,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         InkWell(
                           onTap: () {
                             //
-                            Navigator.pushNamed(
-                              context,
-                              EmailverifyScreen.name,
-                            );
+                            // Navigator.pushNamed(
+                            //   context,
+                            //   EmailverifyScreen.name,
+                            // );
                             //
+                            Get.toNamed(EmailverifyScreen.name);
                           },
                           child: Text(
                             'Forgot password ',
@@ -124,8 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         InkWell(
                           onTap: () {
                             //
-                            Navigator.pushNamed(context, SignUpScreen.name);
+                           // Navigator.pushNamed(context, SignUpScreen.name);
                             //
+                            Get.toNamed(SignUpScreen.name);
                           },
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -178,11 +181,12 @@ class _LoginScreenState extends State<LoginScreen> {
       UserModel userData = UserModel.fromJson(response.ResponseBody!['data']);
       await AuthController.saveuserData(token, userData);
       message(context, 'Login Success');
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        HomeScreen.name,
-        (predicate) => false,
-      );
+      // Navigator.pushNamedAndRemoveUntil(
+      //   context,
+      //   HomeScreen.name,
+      //   (predicate) => false,
+      // );
+      Get.offAllNamed(HomeScreen.name);
     } else {
       print(response.ResponseBody);
       message(context, response.errorMassage);

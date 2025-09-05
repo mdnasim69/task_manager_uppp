@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/UI/Screen/Login_Screen.dart';
 import 'package:task_manager/UI/widget/background.dart';
 import 'package:task_manager/UI/widget/massage.dart';
@@ -231,7 +232,9 @@ class _LoginScreenState extends State<SignUpScreen> {
       _clearFields();
       Loading = false;
       setState(() {});
-      message(context, 'Registration sucessfull');
+      Get.toNamed(LoginScreen.name);
+      message(context, 'Registration successful');
+
     } else {
       message(context, '${response.errorMassage} ,fail try again');
       Loading = false;
