@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:task_manager/UI/controllers/NewTaskController.dart';
 import 'package:task_manager/UI/widget/TaskItem.dart';
 import 'package:task_manager/UI/widget/background.dart';
 import 'package:task_manager/UI/widget/statusCount.dart';
 import 'package:task_manager/data/model/TaskCountByStatusModel.dart';
 import 'package:task_manager/data/model/TaskListByStatusModel.dart';
+import 'package:task_manager/data/model/TaskListModel.dart';
 import 'package:task_manager/data/service/NetworkCaller.dart';
 import 'package:task_manager/data/utils/URL.dart';
 
@@ -18,7 +21,7 @@ class _NewTaskState extends State<NewTask> {
   bool Loading = false;
   TaskCountByStatusModel? taskCountByStatusModel;
   TaskListByStatusModel? taskListByStatusModel;
-
+ final NewTaskController newTaskController =Get.find<NewTaskController>();
   @override
   void initState() {
     _TaskCount();
@@ -31,52 +34,60 @@ class _NewTaskState extends State<NewTask> {
     return Scaffold(
       body: RefreshIndicator(onRefresh: _TaskList,
         child: Background(
-          child: Visibility(
-            visible: Loading == false,
-            replacement: Center(child: CircularProgressIndicator()),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 92,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        primary: true,
-                        itemCount: taskCountByStatusModel?.data?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          return StatusCount(
-                            title: taskCountByStatusModel!.data![index].sId ?? '',
-                            count: taskCountByStatusModel!.data![index].sum
-                                .toString(),
-                          );
-                        },
+          child: GetBuilder<NewTaskController>(
+            builder: (controller) {
+              return Visibility(
+                visible: controller.Loading == false,
+                replacement: Center(child: CircularProgressIndicator()),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 92,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            primary: true,
+                            itemCount: taskCountByStatusModel?.data?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return StatusCount(
+                                title: taskCountByStatusModel!.data![index].sId ?? '',
+                                count: taskCountByStatusModel!.data![index].sum
+                                    .toString(),
+                              );
+                            },
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView.builder(
-                      itemCount: taskListByStatusModel?.data?.length ?? 0,
-                      shrinkWrap: true,
-                      primary: false,
-                      itemBuilder: (context, index) => TaskItem(
-                        id: taskListByStatusModel!.data![index].sId.toString(),
-                        status:'New',
-                        color: Colors.green,
-                        taskListModel: taskListByStatusModel!.data![index],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: _taskList(controller.taskList),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            }
           ),
         ),
       ),
     );
+  }
+
+  ListView _taskList(List<TaskListModel> data) {
+    return ListView.builder(
+                        itemCount: data.length,
+                        shrinkWrap: true,
+                        primary: false,
+                        itemBuilder: (context, index) => TaskItem(
+                          id: data[index].sId.toString(),
+                          status:'New',
+                          color: Colors.green,
+                          taskListModel: data[index],
+                        ),
+                      );
   }
 
   Future<void> _TaskCount() async {
@@ -99,21 +110,12 @@ class _NewTaskState extends State<NewTask> {
   }
 
   Future<void> _TaskList() async {
-    Loading = true;
-    setState(() {});
-    NetworkResponse response = await Networkcaller.getReqest(
-      URLs.NewTaskListURL('New'),
-    );
-    if (response.isSuccess) {
-      taskListByStatusModel = TaskListByStatusModel.fromJson(
-        response.ResponseBody!,
-      );
+    bool response =await newTaskController.GetTask();
+    if (response) {
     } else {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('fail 1')));
+      ).showSnackBar(SnackBar(content: Text(newTaskController.errorMessage)));
     }
-    Loading = false;
-    setState(() {});
   }
 }

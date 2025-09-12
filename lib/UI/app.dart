@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:task_manager/UI/Binder/Conterller_Binding.dart';
 import 'package:task_manager/UI/Screen/AddNewTask_scree.dart';
 import 'package:task_manager/UI/Screen/EmailVerify_Screen.dart';
 import 'package:task_manager/UI/Screen/Home.dart';
@@ -19,6 +20,7 @@ class TaskManagerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: ControllerBinding(),
       theme: ThemeData(
         textTheme: const TextTheme(
           titleLarge: TextStyle(

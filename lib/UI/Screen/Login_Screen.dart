@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/UI/Screen/EmailVerify_Screen.dart';
 import 'package:task_manager/UI/Screen/Home.dart';
 import 'package:task_manager/UI/Screen/SignUp_Screen.dart';
-import 'package:task_manager/UI/controllers/auth_controller.dart';
+import 'package:task_manager/UI/controllers/Login_Controller.dart';
 import 'package:task_manager/UI/widget/background.dart';
 import 'package:task_manager/UI/widget/massage.dart';
-import 'package:task_manager/data/model/user_model.dart';
-import 'package:task_manager/data/service/NetworkCaller.dart';
-import 'package:task_manager/data/utils/URL.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
   static String name = '/login';
 
   @override
@@ -22,8 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final LogInController logInController = Get.find<LogInController>();
 
-  bool Loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -76,27 +74,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 24),
                     SizedBox(
                       height: 50,
-                      child: Visibility(
-                        visible: Loading == false,
-                        replacement: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formkey.currentState!.validate()) {
-                              _onLogin();
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            fixedSize: const Size.fromWidth(double.maxFinite),
-                            backgroundColor: Colors.blueAccent,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
+                      child: GetBuilder<LogInController>(
+                        builder: (controller) {
+                          return Visibility(
+                            visible:controller.Loading==false,
+                            replacement: const Center(
+                              child: CircularProgressIndicator(),
                             ),
-                          ),
-                          child: const Text('Login'),
-                        ),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_formkey.currentState!.validate()) {
+                                  _onLogin();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                fixedSize: const Size.fromWidth(double.maxFinite),
+                                backgroundColor: Colors.blueAccent,
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                              child: const Text('Login'),
+                            ),
+                          );
+                        }
                       ),
                     ),
                     const SizedBox(height: 48),
@@ -126,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         InkWell(
                           onTap: () {
                             //
-                           // Navigator.pushNamed(context, SignUpScreen.name);
+                            // Navigator.pushNamed(context, SignUpScreen.name);
                             //
                             Get.toNamed(SignUpScreen.name);
                           },
@@ -164,32 +166,20 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _onLogin() async {
-    Loading = true;
-    setState(() {});
-    Map<String, dynamic> PostBody = {
-      "email": _emailController.text.trim(),
-      "password": _passwordController.text,
-    };
-    NetworkResponse response = await Networkcaller.postReqest(
-      URLs.loginURL,
-      PostBody,
+    bool response = await logInController.onLogin(
+      _emailController.text.trim(),
+      _passwordController.text,
     );
-    Loading = false;
-    setState(() {});
-    if (response.isSuccess) {
-      String token = response.ResponseBody!['token'];
-      UserModel userData = UserModel.fromJson(response.ResponseBody!['data']);
-      await AuthController.saveuserData(token, userData);
-      message(context, 'Login Success');
+    if (response) {
+      message(context, logInController.errorMessage);
       // Navigator.pushNamedAndRemoveUntil(
       //   context,
       //   HomeScreen.name,
       //   (predicate) => false,
       // );
-      Get.offAllNamed(HomeScreen.name);
+
     } else {
-      print(response.ResponseBody);
-      message(context, response.errorMassage);
+      message(context, logInController.errorMessage);
     }
   }
 
